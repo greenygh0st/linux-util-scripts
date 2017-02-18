@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Boot partition getting full?
+kernelver=$(uname -r | sed -r 's/-[a-z]+//')
+dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve $kernelver
+sudo apt-get purge $(dpkg -l linux-{image,headers}-"[0-9]*" | awk '/ii/{print $2}' | grep -ve "$(uname -r | sed -r 's/-[a-z]+//')")
